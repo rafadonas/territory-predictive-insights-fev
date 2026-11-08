@@ -1,0 +1,4 @@
+# Fins de linha estáveis entre Windows, Linux e macOS
+* text=auto
+mvnw text eol=lf
+*.cmd text eol=crlf
