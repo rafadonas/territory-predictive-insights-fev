@@ -135,8 +135,17 @@ O teste `ValidacaoPrevisoesTest` gera 600 leituras válidas por sensor (simulaç
 - O banco H2 em arquivo aceita um processo por vez: não abra duas janelas do programa ao mesmo tempo.
 
 ## 11. Uso de IA
-Usamos ferramentas de IA generativa neste projeto: Claude Code (Anthropic) e Gemini (Google), pelo Antigravity CLI. Elas foram usadas para **gerar a base do código, dos testes e deste README** e para **revisar o projeto** como um avaliador. Todo o código foi compilado e testado (`mvnw clean package`, 33 testes passando) e executado pelo menu.
-**Como a equipe revisou:** [preencha antes de entregar: quem leu cada pacote, o que foi alterado, quais trechos cada integrante sabe explicar].
+Usamos IA generativa como parceira de desenvolvimento: Claude Code (Anthropic) e Gemini (Google, pelo Antigravity CLI). Aqui declaramos onde ela entrou e o que ficou com a equipe.
+
+**O que a IA fez:** escreveu a maior parte do código a partir das nossas instruções (domínio, exceções, persistência JDBC, serviço e menu), os testes JUnit/Mockito e a primeira versão deste README. Também atuou como revisora independente, comparando o projeto com o enunciado item a item.
+
+**O que a equipe fez:**
+- **Definiu o objetivo e as regras de trabalho:** seguir o enunciado à risca, não inventar dados nem fontes, não publicar nada sem nossa autorização e só aceitar o resultado com nota 10 na revisão.
+- **Acompanhou as etapas e validou as decisões:** recorte de chuva intensa e alagamento, caminho JDBC + H2, os três padrões criacionais e um território fictício descrito por região, sem dados pessoais.
+- **Revisou executando o sistema, não só lendo:** `mvnw clean package` com 33 testes passando, uso de todas as opções do menu, reinício do programa para confirmar que o histórico continua no banco e exportação do CSV.
+- **Pediu uma revisão final de cada requisito do enunciado.** Ela encontrou um texto de explicação errado na previsão por comparação ("estável em 0,0" quando a variação era zero), que foi corrigido.
+
+**Responsabilidade por parte do código:** cada integrante responde pela parte indicada na seção 12. Antes da entrega, cada um estuda a sua parte para conseguir explicá-la na conversa de correção.
 
 ## 12. Divisão de tarefas
 | Integrante | Tarefas |
