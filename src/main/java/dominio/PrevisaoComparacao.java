@@ -32,11 +32,12 @@ public class PrevisaoComparacao extends EstrategiaPrevisao {
         // Projeção limitada à faixa física: chuva negativa ou umidade acima de 100% não existem.
         double previsto = Math.max(tipo.getMinimoValido(), Math.min(tipo.getMaximoValido(), mediaRecente + variacao));
 
-        String sentido = variacao > 0 ? "subiu" : variacao < 0 ? "caiu" : "ficou estável em";
+        String movimento = variacao > 0 ? "subiu " + tipo.formatar(variacao)
+                : variacao < 0 ? "caiu " + tipo.formatar(-variacao)
+                : "ficou estável";
         String explicacao = String.format(
-                "Período recente: %s; período anterior: %s; %s %s. Se a mesma variação se repetir, deve chegar a %s.",
-                tipo.formatar(mediaRecente), tipo.formatar(mediaAnterior), sentido,
-                tipo.formatar(Math.abs(variacao)), tipo.formatar(previsto));
+                "Período recente: %s; período anterior: %s; %s. Se a mesma variação se repetir, deve chegar a %s.",
+                tipo.formatar(mediaRecente), tipo.formatar(mediaAnterior), movimento, tipo.formatar(previsto));
         return ResultadoPrevisao.calculada(getNome(), previsto, janela * 2, explicacao);
     }
 }
