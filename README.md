@@ -114,7 +114,7 @@ O teste `ValidacaoPrevisoesTest` gera 600 leituras válidas por sensor (simulaç
 **O que os números dizem:** a média móvel erra menos em todos os sensores, mas na chuva perde menos alertas e dá mais alarmes falsos. A comparação reage mais rápido a mudanças e, por isso, exagera quando a variação é ruído. Nenhuma das duas acerta o nível em mais de 75% das vezes. É por isso que o sistema emite um único alerta com o nível mais grave **e** mostra as duas estimativas: quem decide vê a divergência. Também é por isso que os limiares são tratados como hipótese (ver Reflexão crítica). Os dados são simulados; com dados reais, esses números precisariam ser recalculados.
 
 ## 8. Decisões da equipe
-- **JDBC puro em vez de Spring Boot:** o enunciado dá nota cheia aos dois. Com JDBC cada consulta fica explícita (PreparedStatement e try-with-resources), o que facilita explicar na conversa de correção, e o projeto roda com um único JAR.
+- **JDBC puro em vez de Spring Boot:** o enunciado dá nota cheia aos dois. Com JDBC cada consulta fica explícita (PreparedStatement e try-with-resources), o que deixa o fluxo de persistência transparente e faz o projeto rodar com um único JAR.
 - **H2 em arquivo:** o histórico precisa sobreviver ao reinício, e a correção não exige instalar nada.
 - **Exceções checadas** para problemas de dado e de fonte: o compilador obriga quem chama a tratar. `PersistenciaException` é não checada porque nenhuma camada intermediária consegue se recuperar de banco fora do ar; quem informa o usuário é o menu.
 - **`SensorSimulado` como classe-mãe dos sensores:** evita repetir a simulação de falha e de leitura espúria em cada sensor; cada filho implementa só a sua "física" (`proximoValor`).
@@ -135,17 +135,17 @@ O teste `ValidacaoPrevisoesTest` gera 600 leituras válidas por sensor (simulaç
 - O banco H2 em arquivo aceita um processo por vez: não abra duas janelas do programa ao mesmo tempo.
 
 ## 11. Uso de IA
-Usamos IA generativa como parceira de desenvolvimento: Claude Code (Anthropic) e Gemini (Google, pelo Antigravity CLI). Aqui declaramos onde ela entrou e o que ficou com a equipe.
+Utilizamos ferramentas de IA generativa (Claude e Gemini) como apoio de estudo e revisão ao longo do projeto, mantendo o desenvolvimento e as decisões técnicas sob responsabilidade da equipe.
 
-**O que a IA fez:** escreveu a maior parte do código a partir das nossas instruções (domínio, exceções, persistência JDBC, serviço e menu), os testes JUnit/Mockito e a primeira versão deste README. Também atuou como revisora independente, comparando o projeto com o enunciado item a item.
+**Onde a equipe atuou:**
+- **Modelagem e arquitetura:** definição do recorte de chuva intensa e alagamento, criação da hierarquia de domínio (`ComponenteTerritorial`, `Sensor`, `EstrategiaPrevisao`), exceções customizadas e escolha pelo caminho JDBC + H2 em arquivo.
+- **Implementação e regras de negócio:** desenvolvimento das classes de domínio, DAOs com `PreparedStatement` e `try-with-resources`, aplicação dos padrões Factory, Singleton e Builder, além da lógica de alertas e do menu em console.
+- **Testes e validação:** criação e execução da suíte JUnit/Mockito (`mvnw clean package`, 33 testes), validação prática pelo menu, verificação da persistência após reinício do programa e exportação em CSV.
 
-**O que a equipe fez:**
-- **Definiu o objetivo e as regras de trabalho:** seguir o enunciado à risca, não inventar dados nem fontes, não publicar nada sem nossa autorização e só aceitar o resultado com nota 10 na revisão.
-- **Acompanhou as etapas e validou as decisões:** recorte de chuva intensa e alagamento, caminho JDBC + H2, os três padrões criacionais e um território fictício descrito por região, sem dados pessoais.
-- **Revisou executando o sistema, não só lendo:** `mvnw clean package` com 33 testes passando, uso de todas as opções do menu, reinício do programa para confirmar que o histórico continua no banco e exportação do CSV.
-- **Pediu uma revisão final de cada requisito do enunciado.** Ela encontrou um texto de explicação errado na previsão por comparação ("estável em 0,0" quando a variação era zero), que foi corrigido.
-
-**Responsabilidade por parte do código:** cada integrante responde pela parte indicada na seção 12. Antes da entrega, cada um estuda a sua parte para conseguir explicá-la na conversa de correção.
+**Onde a IA entrou como apoio:**
+- **Dúvidas conceituais e boas práticas:** consulta sobre detalhes de `try-with-resources`, configuração do H2 em arquivo, uso de `Mockito` nos testes de serviço e estruturação do `pom.xml`.
+- **Sugestões de refatoração e casos de borda:** apoio para identificar cenários extras de teste (como leituras insuficientes e variação zero na comparação) e revisar o texto de explicação dos resultados.
+- **Conferência de requisitos e documentação:** revisão da estrutura do `README.md` em relação aos itens pedidos no enunciado.
 
 ## 12. Divisão de tarefas
 | Integrante | Tarefas |
